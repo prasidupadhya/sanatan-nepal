@@ -1,0 +1,79 @@
+import { Link, useParams } from 'react-router-dom';
+import { branches, entries } from '../content/catalog';
+export function Branch() {
+  const { id } = useParams();
+  const b = branches.find((e) => e.id === id);
+  if (!b) return <NotFound />;
+  return (
+    <section className="page">
+      <Link to="/explore">Knowledge tree</Link>
+      <span className="devanagari">{b.devanagari}</span>
+      <h1>{b.title}</h1>
+      <p className="lede">{b.summary}</p>
+      <div className="entry-grid">
+        {entries
+          .filter((e) => e.branch === id)
+          .map((e) => (
+            <Link className="entry-card" key={e.id} to={'/read/' + e.id}>
+              <h2>{e.title}</h2>
+              <p>{e.summary}</p>
+              <span>Explore chapter ↗</span>
+            </Link>
+          ))}
+      </div>
+    </section>
+  );
+}
+export function Reading() {
+  const { id } = useParams();
+  const e = entries.find((e) => e.id === id);
+  if (!e) return <NotFound />;
+  return (
+    <article className="page reading">
+      <Link to={'/branch/' + e.branch}>
+        {branches.find((b) => b.id === e.branch)?.title}
+      </Link>
+      <span className="devanagari">{e.devanagari}</span>
+      <h1>{e.title}</h1>
+      <p className="lede">{e.summary}</p>
+      <div id="entry-tools" />
+      {e.sections?.map((s) => (
+        <section key={s.title}>
+          <h2>{s.title}</h2>
+          <p>{s.text}</p>
+        </section>
+      ))}
+      <div id="entry-explorer" />
+      <section>
+        <h2>Follow a connection</h2>
+        <div className="chips">
+          {e.related?.map((id) => (
+            <Link key={id} to={'/read/' + id}>
+              {entries.find((e) => e.id === id)?.title ?? id}
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="sources">
+        <h2>Sources & further reading</h2>
+        <p>Original explanations; traditions and interpretations vary.</p>
+        {e.sources?.map((s) => (
+          <a key={s.url} href={s.url} target="_blank" rel="noreferrer">
+            {s.title} ↗
+          </a>
+        ))}
+      </section>
+    </article>
+  );
+}
+export function NotFound() {
+  return (
+    <section className="page">
+      <h1>This path is still unwritten.</h1>
+      <p>Try a branch from the knowledge tree.</p>
+      <Link className="button" to="/explore">
+        Open the tree
+      </Link>
+    </section>
+  );
+}
