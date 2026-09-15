@@ -864,3 +864,42 @@ footer > a:last-child {
     padding: 12px;
   }
 }
+
+.temple-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 25px;
+}
+.geo-map {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.temple-pin span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 40px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: #421d27;
+  border: 2px solid #e0b66c;
+  color: #e0b66c;
+  font-size: 23px;
+}
+.temple-layout .chips {
+  margin-top: 20px;
+}
+.leaflet-popup-content p {
+  color: #421d27;
+}
+.leaflet-popup-content {
+  font-family: 'DM Sans', sans-serif;
+}
+@media (max-width: 900px) {
+  .temple-layout {
+    grid-template-columns: 1fr;
+  }
+}

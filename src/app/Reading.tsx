@@ -1,3 +1,4 @@
+const TempleMap = lazy(() => import('../components/map/TempleMap'));
 const FestivalWheel = lazy(
   () => import('../components/festival-wheel/FestivalWheel'),
 );
@@ -61,6 +62,7 @@ export function Reading() {
         </section>
       ))}
       <Suspense fallback={<p>Opening explorer…</p>}>
+        {id === 'temples' && <TempleMap />}
         {id === 'festivals' && <FestivalWheel />}
         {['shiva', 'vishnu', 'devi', 'dashavatara'].includes(id ?? '') && (
           <DeityExplorer key={id} id={id!} />
