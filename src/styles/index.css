@@ -903,3 +903,45 @@ footer > a:last-child {
     grid-template-columns: 1fr;
   }
 }
+
+.quiz {
+  padding: 35px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 8px;
+  margin-top: 55px;
+}
+.quiz h3 {
+  font-size: 28px;
+}
+.quiz-options {
+  display: grid;
+  gap: 12px;
+}
+.quiz-options button {
+  text-align: left;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.quiz-options button.correct {
+  border: 2px solid #46734f;
+  opacity: 1;
+}
+.quiz-options button[aria-pressed='true'] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.quiz-feedback {
+  margin-top: 25px;
+}
+.quiz-feedback p {
+  margin: 10px 0 20px;
+}
+@media (max-width: 720px) {
+  .quiz {
+    padding: 23px;
+  }
+}

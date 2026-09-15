@@ -1,3 +1,4 @@
+import Quiz from '../components/quiz/Quiz';
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
 const FestivalWheel = lazy(
   () => import('../components/festival-wheel/FestivalWheel'),
@@ -39,6 +40,7 @@ export function Branch() {
             </Link>
           ))}
       </div>
+      <Quiz key={id} section={id!} />
     </section>
   );
 }
@@ -93,6 +95,7 @@ export function Reading() {
           </a>
         ))}
       </section>
+      <Quiz key={e.id} section={e.branch} />
     </article>
   );
 }
