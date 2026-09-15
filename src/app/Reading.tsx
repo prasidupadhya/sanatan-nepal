@@ -1,3 +1,4 @@
+const DeityExplorer = lazy(() => import('../components/tree/DeityExplorer'));
 const TraditionExplorer = lazy(
   () => import('../components/nepal/TraditionExplorer'),
 );
@@ -57,6 +58,9 @@ export function Reading() {
         </section>
       ))}
       <Suspense fallback={<p>Opening explorer…</p>}>
+        {['shiva', 'vishnu', 'devi', 'dashavatara'].includes(id ?? '') && (
+          <DeityExplorer key={id} id={id!} />
+        )}
         {['kumari', 'newar-hinduism', 'monarchy'].includes(id ?? '') && (
           <TraditionExplorer key={id} id={id!} />
         )}
