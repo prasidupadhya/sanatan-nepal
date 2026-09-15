@@ -1,3 +1,6 @@
+const TraditionExplorer = lazy(
+  () => import('../components/nepal/TraditionExplorer'),
+);
 const GitaExplorer = lazy(
   () => import('../components/gita-explorer/GitaExplorer'),
 );
@@ -54,6 +57,9 @@ export function Reading() {
         </section>
       ))}
       <Suspense fallback={<p>Opening explorer…</p>}>
+        {['kumari', 'newar-hinduism', 'monarchy'].includes(id ?? '') && (
+          <TraditionExplorer key={id} id={id!} />
+        )}
         {id === 'mahabharata' && <MahabharataExplorer />}
         {id === 'ramayana' && <RamayanaExplorer />}
         {id === 'bhagavad-gita' && <GitaExplorer />}

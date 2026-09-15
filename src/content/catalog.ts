@@ -1,3 +1,4 @@
+import { traditions } from './nepali-hinduism/traditions';
 import { gita } from './gita';
 import { ramayana } from './epics/ramayana';
 import { mahabharata } from './epics/mahabharata';
@@ -55,6 +56,7 @@ export const branches = [
   },
 ];
 export const entries: Entry[] = [
+  ...traditions,
   ...gita,
   ...ramayana,
   ...mahabharata,
