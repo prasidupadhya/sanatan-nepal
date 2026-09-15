@@ -1,9 +1,10 @@
+import ThemeControl from '../components/ui/ThemeControl';
 const SearchPage = lazy(() => import('./SearchPage'));
 const Saved = lazy(() => import('./Saved'));
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
 import { lazy, Suspense, useEffect } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import { GitBranch, MapPin, Search, Sun, Bookmark } from 'lucide-react';
+import { GitBranch, MapPin, Search, Bookmark } from 'lucide-react';
 import { MotionConfig } from 'framer-motion';
 import Home from './Home';
 import { Branch, Reading, NotFound } from './Reading';
@@ -52,9 +53,7 @@ export default function App() {
           <Link to="/saved" aria-label="Saved chapters">
             <Bookmark size={19} />
           </Link>
-          <span id="theme-control">
-            <Sun size={19} />
-          </span>
+          <ThemeControl />
         </div>
       </header>
       <main id="main">

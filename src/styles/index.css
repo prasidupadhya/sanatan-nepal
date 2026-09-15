@@ -1047,3 +1047,80 @@ progress {
   max-width: 80ch;
   margin-bottom: 0;
 }
+
+:root[data-theme='dark'] {
+  --ink: #f0e6d7;
+  --paper: #201e23;
+  --surface: #2b272e;
+  --muted: #c4b8b3;
+  --line: #584b50;
+  --accent: #e8ac8c;
+  --gold: #d8b779;
+  --shell: #3e2530;
+}
+:root[data-theme='diya'] {
+  --ink: #ffdfa0;
+  --paper: #2c1b15;
+  --surface: #39231a;
+  --muted: #dcc099;
+  --line: #725133;
+  --accent: #f6bc6d;
+  --gold: #f3bb62;
+  --shell: #44271e;
+}
+.theme-control {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.theme-control select {
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  font-size: 12px;
+  max-width: 60px;
+  padding: 4px 0;
+  cursor: pointer;
+}
+.theme-control option {
+  background: var(--paper);
+  color: var(--ink);
+}
+:root:not([data-theme='light'])[data-theme] .nepal-card,
+:root:not([data-theme='light'])[data-theme] .nepal-feature {
+  background: var(--surface);
+}
+:root:not([data-theme='light'])[data-theme] .button {
+  background: var(--shell);
+  color: var(--ink);
+  border-color: var(--line);
+}
+:root:not([data-theme='light'])[data-theme] .button.gold {
+  background: var(--gold);
+  color: #421d27;
+}
+:root[data-theme='diya'] .hero {
+  background: radial-gradient(
+    ellipse at 80% 55%,
+    #71451f 0%,
+    #44271e 45%,
+    #2c1b15 100%
+  );
+}
+:root:not([data-theme='light'])[data-theme] .react-flow__controls button {
+  color: #421d27;
+}
+:root:not([data-theme='light'])[data-theme] .leaflet-container {
+  color: #421d27;
+}
+:root:not([data-theme='light'])[data-theme] .leaflet-container a {
+  color: #623821;
+}
+@media (max-width: 720px) {
+  .theme-control svg {
+    display: none;
+  }
+  .header-tools {
+    gap: 12px;
+  }
+}
