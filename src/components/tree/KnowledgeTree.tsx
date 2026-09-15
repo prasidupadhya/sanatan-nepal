@@ -1,3 +1,4 @@
+import { activateGraphNode } from './keyboard';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -76,11 +77,24 @@ export default function KnowledgeTree() {
     });
     return { nodes, edges };
   }, [active, selected]);
+  function selectNode(id: string) {
+    if (branches.some((b) => b.id === id)) {
+      setActive(id);
+      setSelected(undefined);
+    } else if (id === 'root') {
+      setSelected(undefined);
+    } else {
+      const clicked = entries.find((e) => e.id === id);
+      if (clicked && clicked.branch !== active) setActive(clicked.branch);
+      setSelected(id);
+    }
+  }
   return (
     <>
       <div className="tree-layout">
         <div
           className="tree-canvas"
+          onKeyDownCapture={(event) => activateGraphNode(event, selectNode)}
           role="region"
           aria-label="Interactive knowledge tree. Tab to nodes, press Enter to select; use controls to zoom."
         >
@@ -90,19 +104,7 @@ export default function KnowledgeTree() {
             edges={graph.edges}
             fitView
             minZoom={0.25}
-            onNodeClick={(_, node) => {
-              if (branches.some((b) => b.id === node.id)) {
-                setActive(node.id);
-                setSelected(undefined);
-              } else if (node.id === 'root') {
-                setSelected(undefined);
-              } else {
-                const clicked = entries.find((e) => e.id === node.id);
-                if (clicked && clicked.branch !== active)
-                  setActive(clicked.branch);
-                setSelected(node.id);
-              }
-            }}
+            onNodeClick={(_, node) => selectNode(node.id)}
             nodesDraggable={false}
           >
             <Background color="#b39477" gap={22} />
