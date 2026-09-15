@@ -1124,3 +1124,7 @@ progress {
     gap: 12px;
   }
 }
+.react-flow__node.related-node {
+  border: 2px solid #9b402e !important;
+  background: #eed8af !important;
+}

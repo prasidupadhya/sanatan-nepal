@@ -59,10 +59,10 @@ export const branches = [
   },
 ];
 export const entries: Entry[] = [
-  ...templeEntries,
-  ...festivalEntries,
-  ...deities,
   ...traditions,
+  ...festivalEntries,
+  ...templeEntries,
+  ...deities,
   ...gita,
   ...ramayana,
   ...mahabharata,
