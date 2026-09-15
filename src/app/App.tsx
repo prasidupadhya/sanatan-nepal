@@ -1,3 +1,4 @@
+const Saved = lazy(() => import('./Saved'));
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
 import { lazy, Suspense, useEffect } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
@@ -64,6 +65,7 @@ export default function App() {
           }
         >
           <Routes>
+            <Route path="/saved" element={<Saved />} />
             <Route
               path="/temples"
               element={

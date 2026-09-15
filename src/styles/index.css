@@ -945,3 +945,63 @@ footer > a:last-child {
     padding: 23px;
   }
 }
+
+.entry-tools {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 28px 0;
+}
+.entry-tools button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 13px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.entry-tools button[aria-pressed='true'] {
+  background: var(--shell);
+  color: #f6efdf;
+}
+.entry-tools span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin: 35px 0 50px;
+}
+.progress-grid .entry-card {
+  padding: 20px;
+}
+.progress-grid h3 {
+  font-size: 26px;
+}
+.progress-grid label,
+.progress-grid p {
+  font-size: 12px;
+}
+progress {
+  width: 100%;
+  height: 7px;
+  display: block;
+  margin: 15px 0;
+  accent-color: var(--accent);
+}
+@media (max-width: 1050px) {
+  .progress-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 720px) {
+  .progress-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
