@@ -1,3 +1,4 @@
+import EntryTools from '../components/ui/EntryTools';
 import Quiz from '../components/quiz/Quiz';
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
 const FestivalWheel = lazy(
@@ -56,7 +57,7 @@ export function Reading() {
       <span className="devanagari">{e.devanagari}</span>
       <h1>{e.title}</h1>
       <p className="lede">{e.summary}</p>
-      <div id="entry-tools" />
+      <EntryTools id={e.id} />
       {e.sections?.map((s) => (
         <section key={s.title}>
           <h2>{s.title}</h2>
