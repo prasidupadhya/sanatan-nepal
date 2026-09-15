@@ -1,3 +1,4 @@
+import { ramayana } from './epics/ramayana';
 import { mahabharata } from './epics/mahabharata';
 import { foundations } from './foundations';
 import { puranas } from './puranas';
@@ -53,6 +54,7 @@ export const branches = [
   },
 ];
 export const entries: Entry[] = [
+  ...ramayana,
   ...mahabharata,
   ...foundations,
   ...puranas,

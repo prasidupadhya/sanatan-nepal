@@ -1,3 +1,6 @@
+const RamayanaExplorer = lazy(
+  () => import('../components/epics/RamayanaExplorer'),
+);
 import { lazy, Suspense } from 'react';
 const MahabharataExplorer = lazy(
   () => import('../components/epics/MahabharataExplorer'),
@@ -49,6 +52,7 @@ export function Reading() {
       ))}
       <Suspense fallback={<p>Opening explorer…</p>}>
         {id === 'mahabharata' && <MahabharataExplorer />}
+        {id === 'ramayana' && <RamayanaExplorer />}
       </Suspense>
       <section>
         <h2>Follow a connection</h2>
