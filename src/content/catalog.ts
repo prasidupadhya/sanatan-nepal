@@ -1,3 +1,4 @@
+import { templeEntries } from './nepali-hinduism/temples';
 import { festivalEntries } from './nepali-hinduism/festivals';
 import { deities } from './deities';
 import { traditions } from './nepali-hinduism/traditions';
@@ -58,6 +59,7 @@ export const branches = [
   },
 ];
 export const entries: Entry[] = [
+  ...templeEntries,
   ...festivalEntries,
   ...deities,
   ...traditions,

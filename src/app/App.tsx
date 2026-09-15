@@ -1,3 +1,4 @@
+const TempleMap = lazy(() => import('../components/map/TempleMap'));
 import { lazy, Suspense, useEffect } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { GitBranch, MapPin, Search, Sun, Bookmark } from 'lucide-react';
@@ -63,6 +64,16 @@ export default function App() {
           }
         >
           <Routes>
+            <Route
+              path="/temples"
+              element={
+                <section className="page">
+                  <span className="devanagari">नेपालका मन्दिर</span>
+                  <h1>Sacred places of Nepal</h1>
+                  <TempleMap />
+                </section>
+              }
+            />
             <Route path="/" element={<Home />} />
             <Route
               path="/explore"
