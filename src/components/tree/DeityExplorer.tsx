@@ -1,3 +1,4 @@
+import { activateGraphNode } from './keyboard';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactFlow, Background, Controls } from '@xyflow/react';
@@ -40,7 +41,10 @@ export default function DeityExplorer({ id }: { id: string }) {
           : 'These lines show manifestations and associations, not biological parentage.'}
       </p>
       <div className="tree-layout">
-        <div className="tree-canvas">
+        <div
+          className="tree-canvas"
+          onKeyDownCapture={(event) => activateGraphNode(event, setSelected)}
+        >
           <ReactFlow
             fitView
             nodesDraggable={false}
@@ -56,24 +60,22 @@ export default function DeityExplorer({ id }: { id: string }) {
               data: { label: entries.find((e) => e.id === id)?.title },
               className: selected === id ? 'active-node' : '',
             }))}
-            edges={ids
-              .slice(1)
-              .map((id) => ({
-                id,
-                source: ids[0],
-                target: id,
-                label:
-                  key === 'shiva'
-                    ? id === 'parvati'
-                      ? 'consort'
-                      : ['ganesha', 'kartikeya'].includes(id)
-                        ? 'child'
-                        : id === 'ravana'
-                          ? 'devotee'
-                          : 'manifestation'
-                    : 'form / avatar',
-                animated: selected === id || selected === ids[0],
-              }))}
+            edges={ids.slice(1).map((id) => ({
+              id,
+              source: ids[0],
+              target: id,
+              label:
+                key === 'shiva'
+                  ? id === 'parvati'
+                    ? 'consort'
+                    : ['ganesha', 'kartikeya'].includes(id)
+                      ? 'child'
+                      : id === 'ravana'
+                        ? 'devotee'
+                        : 'manifestation'
+                  : 'form / avatar',
+              animated: selected === id || selected === ids[0],
+            }))}
             onNodeClick={(_, n) => setSelected(n.id)}
           >
             <Background />
