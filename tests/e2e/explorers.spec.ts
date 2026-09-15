@@ -117,3 +117,21 @@ test('knowledge tree selection and small-screen explorers', async ({
     fullPage: true,
   });
 });
+test('tree illuminates Ravana’s cross-branch connection to Shiva', async ({
+  page,
+}) => {
+  await page.goto('/explore');
+  await page
+    .locator('.react-flow__node')
+    .filter({ hasText: 'The Great Epics' })
+    .click();
+  const node = page
+    .locator('.react-flow__node')
+    .filter({ hasText: /^Ravana$/ });
+  await node.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.tree-panel h2')).toHaveText('Ravana');
+  await expect(page.locator('.react-flow__node.related-node')).toHaveText(
+    'Shiva',
+  );
+});
