@@ -1,13 +1,13 @@
 import ThemeControl from '../components/ui/ThemeControl';
-const SearchPage = lazy(() => import('./SearchPage'));
-const Saved = lazy(() => import('./Saved'));
-const TempleMap = lazy(() => import('../components/map/TempleMap'));
 import { lazy, Suspense, useEffect } from 'react';
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { GitBranch, MapPin, Search, Bookmark } from 'lucide-react';
 import { MotionConfig } from 'framer-motion';
 import Home from './Home';
 import { Branch, Reading, NotFound } from './Reading';
+const SearchPage = lazy(() => import('./SearchPage'));
+const Saved = lazy(() => import('./Saved'));
+const TempleMap = lazy(() => import('../components/map/TempleMap'));
 const KnowledgeTree = lazy(() => import('../components/tree/KnowledgeTree'));
 function ScrollReset() {
   const { pathname } = useLocation();
