@@ -1,3 +1,6 @@
+const GitaExplorer = lazy(
+  () => import('../components/gita-explorer/GitaExplorer'),
+);
 const RamayanaExplorer = lazy(
   () => import('../components/epics/RamayanaExplorer'),
 );
@@ -53,6 +56,7 @@ export function Reading() {
       <Suspense fallback={<p>Opening explorer…</p>}>
         {id === 'mahabharata' && <MahabharataExplorer />}
         {id === 'ramayana' && <RamayanaExplorer />}
+        {id === 'bhagavad-gita' && <GitaExplorer />}
       </Suspense>
       <section>
         <h2>Follow a connection</h2>
