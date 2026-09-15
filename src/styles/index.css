@@ -9,7 +9,7 @@
   --ink: #421d27;
   --paper: #f6efdf;
   --surface: #fffaf0;
-  --muted: #755f59;
+  --muted: #6b554e;
   --line: #d8c7ac;
   --accent: #9b402e;
   --gold: #e0b66c;
@@ -658,8 +658,8 @@ footer > a:last-child {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    transition: none !important;
     scroll-behavior: auto !important;
   }
 }

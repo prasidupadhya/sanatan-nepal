@@ -35,9 +35,9 @@ export default function GitaExplorer() {
         <AnimatePresence mode="wait">
           <motion.div
             key={selected}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
+            initial={{ y: 8 }}
+            animate={{ y: 0 }}
+            exit={{ y: -8 }}
             className="gita-reading"
             aria-live="polite"
           >
