@@ -1,3 +1,4 @@
+import AutoFit from './AutoFit';
 import { activateGraphNode } from './keyboard';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -107,6 +108,7 @@ export default function KnowledgeTree() {
             onNodeClick={(_, node) => selectNode(node.id)}
             nodesDraggable={false}
           >
+            <AutoFit revision={active + ':' + (selected ?? '')} />
             <Background color="#b39477" gap={22} />
             <Controls showInteractive={false} />
           </ReactFlow>

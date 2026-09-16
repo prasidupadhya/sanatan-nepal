@@ -134,4 +134,5 @@ test('tree illuminates Ravana’s cross-branch connection to Shiva', async ({
   await expect(page.locator('.react-flow__node.related-node')).toHaveText(
     'Shiva',
   );
+  await expect(page.locator('.react-flow__node.related-node')).toBeInViewport();
 });
