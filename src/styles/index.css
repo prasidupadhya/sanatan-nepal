@@ -826,3 +826,80 @@ footer > a:last-child {
     padding: 22px;
   }
 }
+
+.festival-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+.year-wheel {
+  width: 100%;
+  max-width: 600px;
+}
+.year-wheel g[role='button'] {
+  cursor: pointer;
+}
+.year-wheel g[role='button']:focus circle {
+  stroke: var(--accent);
+  stroke-width: 5px;
+}
+.festival .chips,
+.tradition-explorer .entry-card {
+  margin-top: 25px;
+}
+.chips button[aria-pressed='true'] {
+  background: var(--shell);
+  color: #f6efdf;
+}
+.festival .actions {
+  justify-content: center;
+  margin: 10px 0 20px;
+}
+@media (max-width: 720px) {
+  .festival-layout {
+    grid-template-columns: 1fr;
+  }
+  .festival .button {
+    padding: 12px;
+  }
+}
+
+.temple-layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 25px;
+}
+.geo-map {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.temple-pin span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 40px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: #421d27;
+  border: 2px solid #e0b66c;
+  color: #e0b66c;
+  font-size: 23px;
+}
+.temple-layout .chips {
+  margin-top: 20px;
+}
+.leaflet-popup-content p {
+  color: #421d27;
+}
+.leaflet-popup-content {
+  font-family: 'DM Sans', sans-serif;
+}
+@media (max-width: 900px) {
+  .temple-layout {
+    grid-template-columns: 1fr;
+  }
+}
