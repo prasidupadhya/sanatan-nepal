@@ -1,3 +1,4 @@
+import { activateGraphNode } from './keyboard';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactFlow, Background, Controls, type Edge } from '@xyflow/react';
@@ -54,6 +55,7 @@ export default function FamilyTree({
       <div className="tree-layout">
         <div
           className="tree-canvas"
+          onKeyDownCapture={(event) => activateGraphNode(event, setSelected)}
           role="region"
           aria-label={title + '; keyboard and zoom controls available'}
         >

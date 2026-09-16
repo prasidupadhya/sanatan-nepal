@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { festivals } from '../../content/nepali-hinduism/festivals';
@@ -17,12 +17,16 @@ const months = [
   'Dec',
 ];
 export default function FestivalWheel() {
-  const [active, setActive] = useState(5);
-  const [rotation, setRotation] = useState(0);
+  const [params, setParams] = useSearchParams();
+  const index = festivals.findIndex((f) => f.id === params.get('festival'));
+  const active = index < 0 ? 5 : index;
   const f = festivals[active];
+  const rotation = -f.month * 30;
   function choose(i: number) {
-    setActive((i + festivals.length) % festivals.length);
-    setRotation((r) => r + 30);
+    setParams(
+      { festival: festivals[(i + festivals.length) % festivals.length].id },
+      { replace: true },
+    );
   }
   return (
     <section className="festival">
@@ -66,65 +70,68 @@ export default function FestivalWheel() {
                   transform={`rotate(${i * 15} 300 300)`}
                 />
               ))}
-            </motion.g>
-            {months.map((m, i) => {
-              const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
-              return (
-                <text
-                  key={m}
-                  x={300 + 225 * Math.cos(a)}
-                  y={306 + 225 * Math.sin(a)}
-                  textAnchor="middle"
-                  fill="var(--muted)"
-                  fontSize="14"
-                >
-                  {m}
-                </text>
-              );
-            })}
-            {festivals.map((f, i) => {
-              const a = (f.month / 12) * Math.PI * 2 - Math.PI / 2;
-              const r = i % 2 ? 181 : 143;
-              const x = 300 + r * Math.cos(a),
-                y = 300 + r * Math.sin(a);
-              return (
-                <g
-                  key={f.id}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={f.title}
-                  aria-pressed={active === i}
-                  onClick={() => choose(i)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      choose(i);
-                    }
-                  }}
-                >
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r="22"
-                    fill={active === i ? 'var(--accent)' : 'var(--shell)'}
-                    stroke="var(--gold)"
-                    strokeWidth="2"
-                  />
+              {months.map((m, i) => {
+                const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+                return (
                   <text
-                    x={x}
-                    y={y + 5}
+                    key={m}
+                    x={300 + 225 * Math.cos(a)}
+                    y={306 + 225 * Math.sin(a)}
                     textAnchor="middle"
-                    fill="#fff7e7"
-                    fontSize="13"
+                    fill="var(--muted)"
+                    transform={`rotate(${-rotation} ${300 + 225 * Math.cos(a)} ${306 + 225 * Math.sin(a)})`}
+                    fontSize="14"
                   >
-                    {i + 1}
+                    {m}
                   </text>
-                  <title>
-                    {f.title}: {f.season}
-                  </title>
-                </g>
-              );
-            })}
+                );
+              })}
+              {festivals.map((f, i) => {
+                const a = (f.month / 12) * Math.PI * 2 - Math.PI / 2;
+                const r = i % 2 ? 181 : 143;
+                const x = 300 + r * Math.cos(a),
+                  y = 300 + r * Math.sin(a);
+                return (
+                  <g
+                    key={f.id}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={f.title}
+                    aria-pressed={active === i}
+                    onClick={() => choose(i)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        choose(i);
+                      }
+                    }}
+                  >
+                    <circle
+                      cx={x}
+                      cy={y}
+                      r="22"
+                      fill={active === i ? 'var(--accent)' : 'var(--shell)'}
+                      stroke="var(--gold)"
+                      strokeWidth="2"
+                    />
+                    <text
+                      x={x}
+                      y={y + 5}
+                      textAnchor="middle"
+                      fill="#fff7e7"
+                      transform={`rotate(${-rotation} ${x} ${y})`}
+                      fontSize="13"
+                    >
+                      {i + 1}
+                    </text>
+                    <title>
+                      {f.title}: {f.season}
+                    </title>
+                  </g>
+                );
+              })}
+            </motion.g>
+            <path d="M292 33 L300 49 L308 33Z" fill="var(--accent)" />
             <text
               x="300"
               y="293"
@@ -141,7 +148,7 @@ export default function FestivalWheel() {
               fill="var(--muted)"
               fontSize="12"
             >
-              A living calendar
+              Selected season ↑
             </text>
           </svg>
           <div className="actions">

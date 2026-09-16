@@ -1,5 +1,8 @@
 import EntryTools from '../components/ui/EntryTools';
 import Quiz from '../components/quiz/Quiz';
+import { lazy, Suspense } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { branches, entries } from '../content/catalog';
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
 const FestivalWheel = lazy(
   () => import('../components/festival-wheel/FestivalWheel'),
@@ -14,12 +17,9 @@ const GitaExplorer = lazy(
 const RamayanaExplorer = lazy(
   () => import('../components/epics/RamayanaExplorer'),
 );
-import { lazy, Suspense } from 'react';
 const MahabharataExplorer = lazy(
   () => import('../components/epics/MahabharataExplorer'),
 );
-import { Link, useParams } from 'react-router-dom';
-import { branches, entries } from '../content/catalog';
 export function Branch() {
   const { id } = useParams();
   const b = branches.find((e) => e.id === id);

@@ -21,8 +21,8 @@ export default function StoryMode({ scenes }: { scenes: Scene[] }) {
           <motion.article
             key={s.title}
             className="story-scene"
-            initial={reduced ? false : { opacity: 0.4 }}
-            whileInView={{ opacity: 1 }}
+            initial={reduced ? false : { y: 16 }}
+            whileInView={{ y: 0 }}
             viewport={{ amount: 0.5 }}
           >
             <div aria-hidden="true" className="scene-art">

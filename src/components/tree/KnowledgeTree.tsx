@@ -1,3 +1,4 @@
+import { activateGraphNode } from './keyboard';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -11,6 +12,8 @@ import '@xyflow/react/dist/style.css';
 import { branches, entries } from '../../content/catalog';
 export default function KnowledgeTree() {
   const [active, setActive] = useState('nepal');
+  const [selected, setSelected] = useState<string>();
+  const entry = entries.find((e) => e.id === selected);
   const graph = useMemo(() => {
     const nodes: Node[] = [
       {
@@ -42,44 +45,73 @@ export default function KnowledgeTree() {
           id: e.id,
           position: { x: (i % 5) * 210, y: 340 + Math.floor(i / 5) * 100 },
           data: { label: e.title },
+          className: e.id === selected ? 'active-node' : '',
         });
         edges.push({
           id: 'e-' + e.id,
           source: active,
           target: e.id,
-          animated: true,
+          animated: e.id === selected,
         });
       });
+    const selectedEntry = entries.find((e) => e.id === selected);
+    const related = selectedEntry?.related ?? [];
+    related.forEach((id, i) => {
+      const relatedEntry = entries.find((e) => e.id === id);
+      if (!relatedEntry) return;
+      if (!nodes.some((n) => n.id === id))
+        nodes.push({
+          id,
+          position: { x: 1100, y: 200 + i * 120 },
+          data: { label: relatedEntry.title },
+          className: 'related-node',
+        });
+      edges.push({
+        id: 'related-' + id,
+        source: selected!,
+        target: id,
+        label: 'related',
+        animated: true,
+        style: { strokeWidth: 3, strokeDasharray: '5 4' },
+      });
+    });
     return { nodes, edges };
-  }, [active]);
-  const [selected, setSelected] = useState<string>();
-  const entry = entries.find((e) => e.id === selected);
+  }, [active, selected]);
+  function selectNode(id: string) {
+    if (branches.some((b) => b.id === id)) {
+      setActive(id);
+      setSelected(undefined);
+    } else if (id === 'root') {
+      setSelected(undefined);
+    } else {
+      const clicked = entries.find((e) => e.id === id);
+      if (clicked && clicked.branch !== active) setActive(clicked.branch);
+      setSelected(id);
+    }
+  }
   return (
     <>
       <div className="tree-layout">
         <div
           className="tree-canvas"
+          onKeyDownCapture={(event) => activateGraphNode(event, selectNode)}
           role="region"
           aria-label="Interactive knowledge tree. Tab to nodes, press Enter to select; use controls to zoom."
         >
           <ReactFlow
+            key={active}
             nodes={graph.nodes}
             edges={graph.edges}
             fitView
             minZoom={0.25}
-            onNodeClick={(_, node) => {
-              if (branches.some((b) => b.id === node.id)) {
-                setActive(node.id);
-                setSelected(undefined);
-              } else setSelected(node.id);
-            }}
+            onNodeClick={(_, node) => selectNode(node.id)}
             nodesDraggable={false}
           >
             <Background color="#b39477" gap={22} />
             <Controls showInteractive={false} />
           </ReactFlow>
         </div>
-        <aside className="tree-panel">
+        <aside className="tree-panel" aria-live="polite">
           <span className="devanagari">
             {branches.find((b) => b.id === active)?.devanagari}
           </span>
@@ -116,7 +148,14 @@ export default function KnowledgeTree() {
         <summary>Browse the tree as a list</summary>
         {branches.map((b) => (
           <div key={b.id}>
-            <button onClick={() => setActive(b.id)}>{b.title}</button>
+            <button
+              onClick={() => {
+                setActive(b.id);
+                setSelected(undefined);
+              }}
+            >
+              {b.title}
+            </button>
             {entries
               .filter((e) => e.branch === b.id)
               .map((e) => (
