@@ -1,3 +1,4 @@
+import { mahabharata } from './epics/mahabharata';
 import { foundations } from './foundations';
 import { puranas } from './puranas';
 import { practice } from './practice';
@@ -51,4 +52,9 @@ export const branches = [
     symbol: '☼',
   },
 ];
-export const entries: Entry[] = [...foundations, ...puranas, ...practice];
+export const entries: Entry[] = [
+  ...mahabharata,
+  ...foundations,
+  ...puranas,
+  ...practice,
+];

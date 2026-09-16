@@ -1,3 +1,7 @@
+import { lazy, Suspense } from 'react';
+const MahabharataExplorer = lazy(
+  () => import('../components/epics/MahabharataExplorer'),
+);
 import { Link, useParams } from 'react-router-dom';
 import { branches, entries } from '../content/catalog';
 export function Branch() {
@@ -43,7 +47,9 @@ export function Reading() {
           <p>{s.text}</p>
         </section>
       ))}
-      <div id="entry-explorer" />
+      <Suspense fallback={<p>Opening explorer…</p>}>
+        {id === 'mahabharata' && <MahabharataExplorer />}
+      </Suspense>
       <section>
         <h2>Follow a connection</h2>
         <div className="chips">
