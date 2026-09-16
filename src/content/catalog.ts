@@ -1,3 +1,6 @@
+import { foundations } from './foundations';
+import { puranas } from './puranas';
+import { practice } from './practice';
 export type Entry = {
   id: string;
   title: string;
@@ -48,4 +51,4 @@ export const branches = [
     symbol: '☼',
   },
 ];
-export const entries: Entry[] = [];
+export const entries: Entry[] = [...foundations, ...puranas, ...practice];
