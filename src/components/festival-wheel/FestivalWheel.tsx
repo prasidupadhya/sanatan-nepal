@@ -1,7 +1,12 @@
+import { scaleLinear } from 'd3-scale';
 import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { festivals } from '../../content/nepali-hinduism/festivals';
+// One quantitative scale keeps month labels and festival positions aligned.
+const seasonAngle = scaleLinear()
+  .domain([0, 12])
+  .range([-Math.PI / 2, (3 * Math.PI) / 2]);
 const months = [
   'Jan',
   'Feb',
@@ -71,7 +76,7 @@ export default function FestivalWheel() {
                 />
               ))}
               {months.map((m, i) => {
-                const a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+                const a = seasonAngle(i);
                 return (
                   <text
                     key={m}
@@ -87,7 +92,7 @@ export default function FestivalWheel() {
                 );
               })}
               {festivals.map((f, i) => {
-                const a = (f.month / 12) * Math.PI * 2 - Math.PI / 2;
+                const a = seasonAngle(f.month);
                 const r = i % 2 ? 181 : 143;
                 const x = 300 + r * Math.cos(a),
                   y = 300 + r * Math.sin(a);
