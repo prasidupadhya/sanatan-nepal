@@ -903,3 +903,147 @@ footer > a:last-child {
     grid-template-columns: 1fr;
   }
 }
+
+.quiz {
+  padding: 35px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 8px;
+  margin-top: 55px;
+}
+.quiz h3 {
+  font-size: 28px;
+}
+.quiz-options {
+  display: grid;
+  gap: 12px;
+}
+.quiz-options button {
+  text-align: left;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.quiz-options button.correct {
+  border: 2px solid #46734f;
+  opacity: 1;
+}
+.quiz-options button[aria-pressed='true'] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.quiz-feedback {
+  margin-top: 25px;
+}
+.quiz-feedback p {
+  margin: 10px 0 20px;
+}
+@media (max-width: 720px) {
+  .quiz {
+    padding: 23px;
+  }
+}
+
+.entry-tools {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 28px 0;
+}
+.entry-tools button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 13px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.entry-tools button[aria-pressed='true'] {
+  background: var(--shell);
+  color: #f6efdf;
+}
+.entry-tools span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin: 35px 0 50px;
+}
+.progress-grid .entry-card {
+  padding: 20px;
+}
+.progress-grid h3 {
+  font-size: 26px;
+}
+.progress-grid label,
+.progress-grid p {
+  font-size: 12px;
+}
+progress {
+  width: 100%;
+  height: 7px;
+  display: block;
+  margin: 15px 0;
+  accent-color: var(--accent);
+}
+@media (max-width: 1050px) {
+  .progress-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 720px) {
+  .progress-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.search-page {
+  max-width: 1150px;
+  margin: auto;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 17px 20px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface);
+  margin: 30px 0 20px;
+}
+.search-field input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--ink);
+}
+.search-results a {
+  display: block;
+  border-bottom: 1px solid var(--line);
+  padding: 25px 0;
+}
+.search-results h2 {
+  font-size: 32px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.search-results .devanagari {
+  font-size: 17px;
+  margin: 0;
+}
+.search-results p {
+  font-size: 14px;
+  max-width: 80ch;
+  margin-bottom: 0;
+}
