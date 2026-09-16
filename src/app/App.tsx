@@ -4,21 +4,23 @@ import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import { GitBranch, MapPin, Search, Bookmark } from 'lucide-react';
 import { MotionConfig } from 'framer-motion';
 import Home from './Home';
+import LoadingContent from '../components/ui/LoadingContent';
+import ContentBoundary from '../components/ui/ContentBoundary';
 import { Branch, Reading, NotFound } from './Reading';
 const SearchPage = lazy(() => import('./SearchPage'));
 const Saved = lazy(() => import('./Saved'));
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
 const KnowledgeTree = lazy(() => import('../components/tree/KnowledgeTree'));
 function ScrollReset() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!hash) window.scrollTo(0, 0);
     document.title =
       'Sanatan Nepal — ' +
       (pathname === '/'
-        ? 'A living constellation'
+        ? 'Hindu traditions in Nepal'
         : pathname.split('/').pop()?.replaceAll('-', ' '));
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }
 export default function App() {
@@ -57,58 +59,53 @@ export default function App() {
         </div>
       </header>
       <main id="main">
-        <Suspense
-          fallback={
-            <p className="page" role="status">
-              Opening this path…
-            </p>
-          }
-        >
-          <Routes>
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/saved" element={<Saved />} />
-            <Route
-              path="/temples"
-              element={
-                <section className="page">
-                  <span className="devanagari">नेपालका मन्दिर</span>
-                  <h1>Sacred places of Nepal</h1>
-                  <TempleMap />
-                </section>
-              }
-            />
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/explore"
-              element={
-                <section className="page">
-                  <div className="section-heading">
-                    <div>
-                      <span className="devanagari">ज्ञानवृक्ष</span>
-                      <h1>The knowledge tree</h1>
+        <ContentBoundary>
+          <Suspense fallback={<LoadingContent />}>
+            <Routes>
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/saved" element={<Saved />} />
+              <Route
+                path="/temples"
+                element={
+                  <section className="page">
+                    <span className="devanagari">नेपालका मन्दिर</span>
+                    <h1>Sacred places of Nepal</h1>
+                    <TempleMap />
+                  </section>
+                }
+              />
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/explore"
+                element={
+                  <section className="page">
+                    <div className="section-heading">
+                      <div>
+                        <span className="devanagari">ज्ञानवृक्ष</span>
+                        <h1>The knowledge tree</h1>
+                      </div>
+                      <p>
+                        Select a topic to read its summary and see related
+                        traditions.
+                      </p>
                     </div>
-                    <p>
-                      Everything is connected.
-                      <br />
-                      Choose a branch to begin.
-                    </p>
-                  </div>
-                  <KnowledgeTree />
-                </section>
-              }
-            />
-            <Route path="/branch/:id" element={<Branch />} />
-            <Route path="/read/:id" element={<Reading />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+                    <KnowledgeTree />
+                  </section>
+                }
+              />
+              <Route path="/branch/:id" element={<Branch />} />
+              <Route path="/read/:id" element={<Reading />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </ContentBoundary>
       </main>
       <footer>
         <Link className="brand" to="/">
           सनातन नेपाल
         </Link>
-        <p>A living heritage. An open invitation to explore.</p>
-        <Link to="/explore">Find your path</Link>
+        <p>Scriptures, sacred places and Hindu traditions in Nepal.</p>
+        <Link to="/explore">Explore the knowledge tree</Link>
       </footer>
     </MotionConfig>
   );

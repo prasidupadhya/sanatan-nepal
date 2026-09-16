@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 test('homepage fits desktop and mobile', async ({ page }) => {
   await page.goto('/');
   await expect(
-    page.getByRole('heading', { name: 'Many paths. One living heritage.' }),
+    page.getByRole('heading', { name: 'Hindu traditions, as lived in Nepal.' }),
   ).toBeVisible();
   await page.screenshot({
     path: 'test-results/home-desktop.png',

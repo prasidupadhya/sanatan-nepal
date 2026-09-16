@@ -1,112 +1,120 @@
+import { useEffect, useMemo } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import EntryTools from '../components/ui/EntryTools';
 import Quiz from '../components/quiz/Quiz';
-import { lazy, Suspense } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import TopicIndex from '../components/ui/TopicIndex';
+import EntryExplorer, { hasExplorer } from '../components/ui/EntryExplorer';
+import ReadingNavigation from '../components/ui/ReadingNavigation';
 import { branches, entries } from '../content/catalog';
-const TempleMap = lazy(() => import('../components/map/TempleMap'));
-const FestivalWheel = lazy(
-  () => import('../components/festival-wheel/FestivalWheel'),
-);
-const DeityExplorer = lazy(() => import('../components/tree/DeityExplorer'));
-const TraditionExplorer = lazy(
-  () => import('../components/nepal/TraditionExplorer'),
-);
-const GitaExplorer = lazy(
-  () => import('../components/gita-explorer/GitaExplorer'),
-);
-const RamayanaExplorer = lazy(
-  () => import('../components/epics/RamayanaExplorer'),
-);
-const MahabharataExplorer = lazy(
-  () => import('../components/epics/MahabharataExplorer'),
-);
+
 export function Branch() {
   const { id } = useParams();
-  const b = branches.find((e) => e.id === id);
-  if (!b) return <NotFound />;
+  const branch = branches.find((entry) => entry.id === id);
+  if (!branch) return <NotFound />;
   return (
     <section className="page">
       <Link to="/explore">Knowledge tree</Link>
-      <span className="devanagari">{b.devanagari}</span>
-      <h1>{b.title}</h1>
-      <p className="lede">{b.summary}</p>
-      <div className="entry-grid">
-        {entries
-          .filter((e) => e.branch === id)
-          .map((e) => (
-            <Link className="entry-card" key={e.id} to={'/read/' + e.id}>
-              <h2>{e.title}</h2>
-              <p>{e.summary}</p>
-              <span>Explore chapter ↗</span>
-            </Link>
-          ))}
-      </div>
-      <Quiz key={id} section={id!} />
+      <h1>{branch.title}</h1>
+      <p className="lede">{branch.summary}</p>
+      <TopicIndex branch={branch.id} />
+      <Quiz key={id} section={branch.id} />
     </section>
   );
 }
 export function Reading() {
   const { id } = useParams();
-  const e = entries.find((e) => e.id === id);
-  if (!e) return <NotFound />;
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const frame = requestAnimationFrame(() =>
+      document.getElementById(hash.slice(1))?.scrollIntoView(),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [id, hash]);
+  const entry = entries.find((item) => item.id === id);
+  const sections = useMemo(
+    () =>
+      entry
+        ? [
+            ...(entry.sections ?? []).map((section, index) => ({
+              id: 'section-' + index,
+              title: section.title,
+            })),
+            ...(hasExplorer(entry.id)
+              ? [{ id: 'interactive', title: 'Interactive explorer' }]
+              : []),
+            { id: 'connections', title: 'Related topics' },
+            { id: 'sources', title: 'Sources' },
+            { id: 'knowledge-check', title: 'Knowledge check' },
+          ]
+        : [],
+    [entry],
+  );
+  if (!entry) return <NotFound />;
   return (
-    <article className="page reading">
-      <Link to={'/branch/' + e.branch}>
-        {branches.find((b) => b.id === e.branch)?.title}
-      </Link>
-      <span className="devanagari">{e.devanagari}</span>
-      <h1>{e.title}</h1>
-      <p className="lede">{e.summary}</p>
-      <EntryTools id={e.id} />
-      {e.sections?.map((s) => (
-        <section key={s.title}>
-          <h2>{s.title}</h2>
-          <p>{s.text}</p>
-        </section>
-      ))}
-      <Suspense fallback={<p>Opening explorer…</p>}>
-        {id === 'temples' && <TempleMap />}
-        {id === 'festivals' && <FestivalWheel />}
-        {['shiva', 'vishnu', 'devi', 'dashavatara'].includes(id ?? '') && (
-          <DeityExplorer key={id} id={id!} />
+    <div className="reading-layout">
+      <ReadingNavigation key={entry.id} sections={sections} />
+      <article className="page reading">
+        <Link to={'/branch/' + entry.branch}>
+          {branches.find((branch) => branch.id === entry.branch)?.title}
+        </Link>
+        <h1>{entry.title}</h1>
+        {entry.devanagari && (
+          <span className="devanagari" lang="ne">
+            {entry.devanagari}
+          </span>
         )}
-        {['kumari', 'newar-hinduism', 'monarchy'].includes(id ?? '') && (
-          <TraditionExplorer key={id} id={id!} />
-        )}
-        {id === 'mahabharata' && <MahabharataExplorer />}
-        {id === 'ramayana' && <RamayanaExplorer />}
-        {id === 'bhagavad-gita' && <GitaExplorer />}
-      </Suspense>
-      <section>
-        <h2>Follow a connection</h2>
-        <div className="chips">
-          {e.related?.map((id) => (
-            <Link key={id} to={'/read/' + id}>
-              {entries.find((e) => e.id === id)?.title ?? id}
-            </Link>
-          ))}
-        </div>
-      </section>
-      <section className="sources">
-        <h2>Sources & further reading</h2>
-        <p>Original explanations; traditions and interpretations vary.</p>
-        {e.sources?.map((s) => (
-          <a key={s.url} href={s.url} target="_blank" rel="noreferrer">
-            {s.title} ↗
-          </a>
+        <p className="lede">{entry.summary}</p>
+        <EntryTools id={entry.id} />
+        {entry.sections?.map((section, index) => (
+          <section key={section.title} id={'section-' + index} tabIndex={-1}>
+            <h2>{section.title}</h2>
+            <p>{section.text}</p>
+          </section>
         ))}
-      </section>
-      <Quiz key={e.id} section={e.branch} />
-    </article>
+        {hasExplorer(entry.id) && (
+          <div id="interactive" tabIndex={-1}>
+            <EntryExplorer id={entry.id} />
+          </div>
+        )}
+        <section id="connections" tabIndex={-1}>
+          <h2>Related topics</h2>
+          <div className="chips">
+            {entry.related?.map((related) => (
+              <Link key={related} to={'/read/' + related}>
+                {entries.find((item) => item.id === related)?.title ?? related}
+              </Link>
+            ))}
+          </div>
+        </section>
+        <section className="sources" id="sources" tabIndex={-1}>
+          <h2>Sources & further reading</h2>
+          <p>Original explanations; traditions and interpretations vary.</p>
+          {entry.sources?.map((source) => (
+            <a
+              key={source.url}
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {source.title} ↗
+            </a>
+          ))}
+        </section>
+        <div id="knowledge-check" tabIndex={-1}>
+          <Quiz key={entry.id} section={entry.branch} />
+        </div>
+      </article>
+    </div>
   );
 }
 export function NotFound() {
   return (
     <section className="page">
-      <h1>This path is still unwritten.</h1>
-      <p>Try a branch from the knowledge tree.</p>
+      <h1>Page not found</h1>
+      <p>This address does not match a topic in the encyclopedia.</p>
       <Link className="button" to="/explore">
-        Open the tree
+        Browse the knowledge tree
       </Link>
     </section>
   );

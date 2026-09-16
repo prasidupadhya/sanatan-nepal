@@ -23,7 +23,7 @@ export const branches = [
     id: 'foundations',
     title: 'Foundations',
     devanagari: 'ज्ञान',
-    summary: 'The Vedas, the self, and the questions that begin a journey.',
+    summary: 'The four Vedas, Upanishads, dharma, karma and liberation.',
     symbol: '✧',
   },
   {
@@ -38,8 +38,7 @@ export const branches = [
     id: 'puranas',
     title: 'Puranas & Mythology',
     devanagari: 'पुराण',
-    summary:
-      'Eighteen great collections. A universe of interconnected stories.',
+    summary: 'The eighteen Mahapuranas, deity families and Vishnu’s avatars.',
     symbol: '❋',
   },
   {
@@ -47,14 +46,14 @@ export const branches = [
     title: 'Nepali Hinduism',
     devanagari: 'नेपाल',
     summary:
-      'Living goddesses, shared sacred spaces and the rhythms of the valley.',
+      'Kumari, Newar traditions, festivals, temples and the history of monarchy.',
     symbol: '◈',
   },
   {
     id: 'practice',
     title: 'Practice & Philosophy',
     devanagari: 'साधना',
-    summary: 'Bring the big questions closer to everyday life.',
+    summary: 'The four paths of yoga, Nepali life-cycle rites and a glossary.',
     symbol: '☼',
   },
 ];

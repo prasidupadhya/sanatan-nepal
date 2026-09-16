@@ -11,6 +11,8 @@ test('main explorers meet automated WCAG checks in each theme', async ({
       '/read/festivals',
       '/temples',
       '/read/bhagavad-gita',
+      '/branch/nepal',
+      '/search?q=Kumari',
     ]) {
       await page.goto(route);
       await page.getByLabel('Color theme').selectOption(theme);

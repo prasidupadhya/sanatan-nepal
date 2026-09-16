@@ -9,10 +9,10 @@ export default function SearchPage() {
   return (
     <section className="page search-page">
       <span className="devanagari">खोज</span>
-      <h1>Follow a question.</h1>
+      <h1>Search the encyclopedia</h1>
       <p className="lede">
-        Find a scripture, deity, place or idea. Different spellings can lead to
-        the same discovery.
+        Find a scripture, deity, place or concept. Try alternate spellings such
+        as Ravan or Geeta.
       </p>
       <label htmlFor="search-input" className="sr-only">
         Search the encyclopedia
@@ -35,7 +35,7 @@ export default function SearchPage() {
       <p role="status">
         {query
           ? results.length + ' results for “' + query + '”'
-          : 'A few paths to begin with'}
+          : 'Suggested searches'}
       </p>
       {!query ? (
         <div className="chips">
@@ -61,7 +61,7 @@ export default function SearchPage() {
         </div>
       ) : (
         <div className="entry-card">
-          <h2>No path found yet.</h2>
+          <h2>No matching topics</h2>
           <p>
             Try a shorter word or another spelling, or browse the knowledge
             tree.

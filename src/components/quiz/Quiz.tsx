@@ -28,11 +28,11 @@ export default function Quiz({ section }: { section: string }) {
   return (
     <section className="quiz" aria-label="Knowledge check">
       <span className="devanagari">मनन</span>
-      <h2>Pause. Reflect. Remember.</h2>
+      <h2>Check your understanding</h2>
       {done ? (
         <div role="status">
           <h3>
-            {score} of {questions.length} connections made
+            {score} of {questions.length} correct
           </h3>
           <p>Your best score is saved on this device.</p>
           <button
@@ -72,7 +72,7 @@ export default function Quiz({ section }: { section: string }) {
               <strong>
                 {selected === q.answer
                   ? 'That’s right.'
-                  : 'A useful connection to revisit.'}
+                  : 'Not quite. Review the explanation below.'}
               </strong>
               <p>{q.explanation}</p>
               <button className="button" onClick={next}>
