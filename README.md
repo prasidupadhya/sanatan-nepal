@@ -1,32 +1,93 @@
 # Sanatan Nepal
 
-An interactive encyclopedia of Hindu traditions in Nepal, built with React 18, strict TypeScript and Vite. Original paraphrases distinguish scripture, tradition and historical evidence.
+An interactive encyclopedia of Hindu traditions in Nepal. Follow relationships through scriptures, epic families, living traditions, festivals and sacred places.
 
-## Run
+## Run locally
 
-Node 22 or later. Run `npm ci`, then `npm run dev`.
-`npm run build` produces `dist/`. Serve with `npm run preview`.
-Production hosts must rewrite unknown paths to `/index.html` for React Router deep links.
+Use Node 22 LTS (22.13 or newer) or Node 24 LTS.
 
-## Checks
+```sh
+npm ci
+npm run dev
+```
 
-`npm test`, `npm run lint`, `npm run format:check`, `npm run build`.
-Husky runs lint-staged at commit time. GitHub Actions repeats validation.
+Open the local URL printed by Vite. No API keys, account or backend are required.
 
-## Structure
+```sh
+npm run build
+npm run preview
+```
 
-- src/app: routing and layout
-- src/components: interactive explorers and shared UI
-- src/content: editor-owned structured content and citations
-- src/store: local progress, bookmarks, scores and theme
-- src/styles: design tokens and responsive styles
-- tests: behavioral and content-integrity tests
+The deployable output is `dist/`. Deploy that directory to a static host configured to rewrite unknown routes to `/index.html`. Deep links such as `/read/kumari` require this fallback. The default build assumes hosting at the domain root; a subdirectory deployment also needs Vite base and router basename configuration.
 
-## Git workflow
+## Explore
 
-Never commit directly to main. Each major section has its own feature branch and PR into main: project-scaffold, tree-explorer, foundations-content, mahabharata-content, ramayana-content, bhagavad-gita-explorer, nepali-hinduism-section, festival-year-wheel, temple-map, quiz-mode, search, theming. Fixes use fix/<issue>. Use small conventional commits, independently validate each PR and merge only after review. Tag v0.1.0 after the core sections merge.
-The initially empty repository was seeded with a deployable HTML baseline authored on feature/repository-bootstrap so GitHub could accept PRs.
+| Path                                             | Experience                                                              |
+| ------------------------------------------------ | ----------------------------------------------------------------------- |
+| `/explore`                                       | Expandable knowledge graph with cross-branch connections                |
+| `/branch/nepal`                                  | Nepal's living traditions and sacred places                             |
+| `/read/mahabharata`                              | Kuru family graph, story mode and eighteen Parvas                       |
+| `/read/ramayana`                                 | Ikshvaku/Raghu lineage, seven Kandas and traditional exile map          |
+| `/read/bhagavad-gita?chapter=18`                 | Eighteen chapters, original explanations and two verse paraphrases each |
+| `/read/shiva`, `/read/devi`, `/read/dashavatara` | Deity relationship explorers                                            |
+| `/read/festivals?festival=tihar`                 | Rotating D3/SVG seasonal festival wheel                                 |
+| `/temples?temple=muktinath`                      | Five temple pins with history, deity and visiting context               |
+| `/search?q=Ravan`                                | Fuzzy search, transliteration aliases and Devanagari                    |
+| `/saved`                                         | Bookmarks, explicit reading completion and best quiz scores             |
 
-## Editorial policy
+Every content entry has a stable `/read/:id` URL. Graphs support pan/zoom, Enter/Space activation and alternative list controls. The three themes are Light, Dark and Diya. Bookmarks, completion, quiz scores and theme are stored in this browser's localStorage; clearing browser storage removes them.
 
-Summaries and verse explanations are original paraphrases, not reproduced translations. Read the sources shown on each entry. Local ritual practices vary by community. Unverified specifics stay marked TODO: verify in content. Map coordinates identify approximate temple locations; epic routes are traditional associations, not established historical itineraries. Festival months are seasonal guides, not exact annual dates.
+## Stack and structure
+
+React 18, strict TypeScript, Vite, React Router v6, Tailwind CSS, Framer Motion, React Flow, D3 scales, Leaflet, Fuse.js and Zustand.
+
+- `src/app/`: routes, homepage, reading shell, search and saved pages
+- `src/components/tree/`: knowledge, family and deity graphs
+- `src/components/story/`: scroll-driven epic narrative
+- `src/components/map/`: Nepal temple map
+- `src/components/festival-wheel/`: seasonal SVG calendar
+- `src/components/gita-explorer/`: chapter explorer
+- `src/components/nepal/`: cultural-context and historical timeline controls
+- `src/components/quiz/`: knowledge checks
+- `src/content/`: typed editorial data, relationships and source references
+- `src/store/`: persisted learning state and themes
+- `src/styles/`: base design system and explorer/theme styles
+- `tests/`: behavioral, content-integrity and production-browser tests
+
+Heavy explorers are lazy-loaded. The homepage's mandala and stylized Nepali pagoda are original SVG artwork. Fonts use Google Fonts with local serif/sans fallbacks. OpenStreetMap tiles require network access; temple details remain available when tiles fail.
+
+## Validation
+
+```sh
+npm run lint
+npm run format:check
+npm test
+npx playwright install chromium
+npm run test:e2e
+npm run build
+```
+
+The browser suite builds and serves the production output on port 4173. It verifies routing, chapter selection, graph interaction, festival/map controls, search, persistent state and mobile overflow. Automated axe checks cover five core pages in all three themes. These checks complement keyboard and visual review; they do not amount to a full accessibility certification.
+
+Husky runs ESLint/Prettier through lint-staged. GitHub Actions validates pushes to `main` and supports manual runs.
+
+## Git workflow — current owner instruction
+
+Work directly on `main`. Do not create feature branches or pull requests.
+
+The initial feature-branch history was condensed into ten commits at the owner's request, preserving the final source tree. All non-main branches were deleted locally and remotely. Five final commits complete this release, for **15 commits total on main**. The release is tagged `v0.1.0`. Preserve this history limit unless the owner changes it; do not expand it automatically.
+
+Use clear conventional commit messages and validate changes before pushing. The earlier PR-based workflow is superseded by this main-only instruction.
+
+## Content and editorial scope
+
+All scripture summaries and verse explanations are original paraphrases. Entries name public-domain or scholarly reference works and link to cultural institutions where available. Interpretation, religious narrative and historical claims are distinguished. Regional practices vary; the Kathmandu Kumari institution is not treated as the model for every Kumari tradition, and Panchayatana worship is not described as unique to Nepal.
+
+See [the content guide](docs/CONTENT_GUIDE.md) for editing instructions. Family graphs are explicitly selective. Epic map locations are traditional associations, not verified historical itineraries. Festival positions are approximate seasonal windows, not a dated annual panchang. Unverified community-specific ritual details remain marked `TODO: verify` in the content source.
+
+### Known limitations
+
+- Audio pronunciation is deferred pending reliable, appropriately licensed recordings.
+- Summaries are introductory. Specialist and community review should precede expansion of detailed ritual procedures.
+- Maps depend on third-party tiles and do not provide live travel conditions.
+- At release validation, `npm audit` reports four moderate package findings: React Router/react-router-dom and Vitest/@vitest/mocker; none high or critical. The requested Router v6 is retained. This SPA has no SSR hydration and its router destinations come from bundled content IDs, but the dependency advisories remain open. See [router redirect advisory](https://github.com/advisories/GHSA-wrjc-x8rr-h8h6), [router hydration advisory](https://github.com/advisories/GHSA-337j-9hxr-rhxg), and [Vitest mocker advisory](https://github.com/advisories/GHSA-82fw-gwwq-j7x9). Recheck dependencies before deployment or extending routing to untrusted destinations.
