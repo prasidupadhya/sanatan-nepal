@@ -9,6 +9,9 @@
 - Plain interface copy, restrained action feedback and refined mobile layouts.
 - Nine production-browser tests, including 21 automated page/theme accessibility scans.
 - Design decisions and applications of the ten supplied references documented in DESIGN.md and docs/DESIGN_REVIEW.md.
+- UI skills audit (docs/UI_SKILLS_ANALYSIS.md): theme tokens for graphs, controls and quiz feedback; saved or device theme applied before first paint; hover and pressed states; 44px chips; 13px text floor; page titles; favicon.
+- Section-scoped quiz headings, header section highlighting on reading pages, scrollable phone section strip and touch-safe search focus.
+- Ten production-browser tests and eight unit tests.
 
 ## v0.1.0
 

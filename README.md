@@ -75,7 +75,7 @@ Husky runs ESLint/Prettier through lint-staged. GitHub Actions validates pushes 
 
 Work directly on `main`. Do not create feature branches or pull requests.
 
-The initial feature-branch history was condensed into ten commits at the owner's request, preserving the final source tree. All non-main branches were deleted locally and remotely. Five final commits complete this release, for **15 commits total on main**. The release is tagged `v0.1.0`. Preserve this history limit unless the owner changes it; do not expand it automatically.
+The initial feature-branch history was condensed into ten commits at the owner's request, preserving the final source tree. All non-main branches were deleted locally and remotely. Five final commits completed that release, for 15 commits; it is tagged `v0.1.0`. Two UI-audit commits and this README update followed at the owner's request, for **18 commits total on main**. All non-main branches remain deleted. Do not add commits beyond this unless the owner asks.
 
 Use clear conventional commit messages and validate changes before pushing. The earlier PR-based workflow is superseded by this main-only instruction.
 
