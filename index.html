@@ -8,10 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <script>
-      // Apply the saved theme before first paint so dark readers see no light flash.
+      // Apply the saved (or device) theme before first paint so dark readers see no light flash.
       try {
-        const theme = JSON.parse(localStorage.getItem('sanatan-nepal-theme'))
-          ?.state?.theme;
+        const theme =
+          JSON.parse(localStorage.getItem('sanatan-nepal-theme'))?.state
+            ?.theme ??
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : null);
         if (theme === 'dark' || theme === 'diya') {
           document.documentElement.dataset.theme = theme;
           document.documentElement.style.colorScheme = 'dark';

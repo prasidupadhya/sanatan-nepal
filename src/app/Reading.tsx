@@ -102,7 +102,13 @@ export function Reading() {
           ))}
         </section>
         <div id="knowledge-check" tabIndex={-1}>
-          <Quiz key={entry.id} section={entry.branch} />
+          <Quiz
+            key={entry.id}
+            section={entry.branch}
+            sectionTitle={
+              branches.find((branch) => branch.id === entry.branch)?.title
+            }
+          />
         </div>
       </article>
     </div>

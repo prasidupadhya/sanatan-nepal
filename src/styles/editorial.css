@@ -508,6 +508,16 @@ h3 {
     overflow-x: auto;
     align-items: center;
     padding-bottom: 8px;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 16px;
+    overscroll-behavior-x: contain;
+    /* The faded edge signals that more sections continue sideways. */
+    padding-right: 48px;
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+  }
+  .reading-navigation nav strong,
+  .reading-navigation nav a {
+    scroll-snap-align: start;
   }
   .reading-navigation nav strong,
   .reading-navigation nav a {

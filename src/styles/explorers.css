@@ -245,6 +245,9 @@
   border-radius: 8px;
   margin-top: 55px;
 }
+.quiz-scope {
+  font-size: 14px;
+}
 .quiz h3 {
   font-size: 28px;
 }

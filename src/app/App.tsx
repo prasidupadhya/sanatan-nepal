@@ -33,6 +33,12 @@ function ScrollReset() {
   return null;
 }
 export default function App() {
+  const { pathname } = useLocation();
+  // Reading a Nepali topic keeps its section marked in the main navigation.
+  const readingNepal =
+    pathname.startsWith('/read/') &&
+    entries.find((entry) => entry.id === pathname.split('/').pop())?.branch ===
+      'nepal';
   return (
     <MotionConfig reducedMotion="user">
       <ScrollReset />
@@ -51,7 +57,14 @@ export default function App() {
             <GitBranch size={16} aria-hidden="true" />
             Explore
           </NavLink>
-          <NavLink to="/branch/nepal">Nepali traditions</NavLink>
+          <NavLink
+            to="/branch/nepal"
+            className={({ isActive }) =>
+              isActive || readingNepal ? 'active' : undefined
+            }
+          >
+            Nepali traditions
+          </NavLink>
           <NavLink to="/temples">
             <MapPin size={16} aria-hidden="true" />
             Sacred places

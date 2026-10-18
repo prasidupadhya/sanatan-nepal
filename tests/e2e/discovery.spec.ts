@@ -70,3 +70,27 @@ test('new layouts fit narrow screens in all themes', async ({ page }) => {
     fullPage: true,
   });
 });
+
+test('first visit follows the device theme and reading pages keep their section marked', async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ colorScheme: 'dark' });
+  const page = await context.newPage();
+  await page.goto('/read/kumari');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.getByLabel('Color theme')).toHaveValue('dark');
+  await expect(page).toHaveTitle('Kumari: the Living Goddess — Sanatan Nepal');
+  await expect(
+    page
+      .getByRole('navigation', { name: 'Main navigation' })
+      .getByRole('link', {
+        name: 'Nepali traditions',
+      }),
+  ).toHaveClass(/active/);
+  await expect(
+    page.getByRole('heading', {
+      name: 'Check your understanding of Nepali Hinduism',
+    }),
+  ).toBeVisible();
+  await context.close();
+});

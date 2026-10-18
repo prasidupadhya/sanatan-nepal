@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll } from 'framer-motion';
 
 export type ReadingSection = { id: string; title: string };
 export default function ReadingNavigation({
@@ -9,6 +9,23 @@ export default function ReadingNavigation({
 }) {
   const { scrollYProgress } = useScroll();
   const [active, setActive] = useState(sections[0]?.id);
+  const navRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+  useEffect(() => {
+    // On narrow screens the list scrolls sideways; keep the current section in view.
+    const nav = navRef.current;
+    const link = nav?.querySelector<HTMLElement>('[aria-current]');
+    if (!nav || !link || nav.scrollWidth <= nav.clientWidth) return;
+    const start = link.offsetLeft - nav.offsetLeft;
+    const visible =
+      start >= nav.scrollLeft &&
+      start + link.offsetWidth <= nav.scrollLeft + nav.clientWidth - 48;
+    if (visible) return;
+    nav.scrollTo({
+      left: start - 16,
+      behavior: reducedMotion ? 'auto' : 'smooth',
+    });
+  }, [active, reducedMotion]);
   useEffect(() => {
     const observer = new IntersectionObserver(
       (observed) => {
@@ -32,7 +49,7 @@ export default function ReadingNavigation({
         style={{ scaleX: scrollYProgress }}
         aria-hidden="true"
       />
-      <nav aria-label="On this page">
+      <nav aria-label="On this page" ref={navRef}>
         <strong>On this page</strong>
         {sections.map((section) => (
           <a

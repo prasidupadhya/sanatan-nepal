@@ -2,6 +2,10 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { searchEntries } from '../content/search';
 import { branches } from '../content/catalog';
+// Opening the on-screen keyboard on arrival hides results on touch devices.
+const finePointer =
+  typeof window !== 'undefined' &&
+  window.matchMedia?.('(pointer: fine)').matches;
 export default function SearchPage() {
   const [params, setParams] = useSearchParams();
   const query = params.get('q') ?? '';
@@ -21,7 +25,7 @@ export default function SearchPage() {
         <Search aria-hidden="true" />
         <input
           id="search-input"
-          autoFocus
+          autoFocus={finePointer}
           type="search"
           value={query}
           placeholder="Try Ravan, Kumari, Dharma…"

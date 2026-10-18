@@ -23,3 +23,12 @@ it('gives immediate feedback, prevents double answers and persists a completed s
       .nepal,
   ).toBe(3);
 });
+it('names the section a reading-page quiz covers', () => {
+  render(<Quiz section="nepal" sectionTitle="Nepali Hinduism" />);
+  expect(
+    screen.getByRole('heading', {
+      name: 'Check your understanding of Nepali Hinduism',
+    }),
+  ).toBeInTheDocument();
+  expect(screen.getByText(/whole section/)).toBeInTheDocument();
+});

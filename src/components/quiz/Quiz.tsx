@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { quizzes } from '../../content/quizzes';
 import { useLearningStore } from '../../store/useLearningStore';
-export default function Quiz({ section }: { section: string }) {
+export default function Quiz({
+  section,
+  sectionTitle,
+}: {
+  section: string;
+  sectionTitle?: string;
+}) {
   const questions = quizzes[section];
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -28,7 +34,16 @@ export default function Quiz({ section }: { section: string }) {
   return (
     <section className="quiz" aria-label="Knowledge check">
       <span className="devanagari">मनन</span>
-      <h2>Check your understanding</h2>
+      <h2>
+        {sectionTitle
+          ? 'Check your understanding of ' + sectionTitle
+          : 'Check your understanding'}
+      </h2>
+      {sectionTitle && (
+        <p className="quiz-scope">
+          Questions cover the whole section, not only this topic.
+        </p>
+      )}
       {done ? (
         <div role="status">
           <h3>

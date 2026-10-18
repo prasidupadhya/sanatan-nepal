@@ -66,18 +66,21 @@ Ordered by the ui-ux-pro-max priority scale.
 | Google Fonts loaded without preconnect                                                                                                        | WDG           | `preconnect` to both font origins                        |
 | Number columns used proportional figures                                                                                                      | WDG, redesign | `tabular-nums` on topic counts and progress labels       |
 
-## Recommended next steps (not applied)
+### 5. Navigation, forms and content (follow-up)
 
-These need a product decision or content work rather than a mechanical fix.
+| Finding                                                                                            | Skill                   | Change                                                                                                              |
+| -------------------------------------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Reading pages show the branch quiz, so the Kumari page asks about Pashupatinath without saying why | frontend-design (copy)  | Heading names the section ("Check your understanding of Nepali Hinduism") and states the scope                      |
+| First visit was always Light                                                                       | design-system-patterns  | First visit follows `prefers-color-scheme`; a saved choice takes precedence, before and after first paint           |
+| Phone "On this page" strip cut the second item mid-word with no sign it scrolls                    | UUPM, WDG               | Edge fade, scroll snapping, `overscroll-behavior-x: contain`; the active section scrolls into view only when hidden |
+| Search page `autoFocus` opened the on-screen keyboard on phones                                    | WDG                     | Autofocus only with a fine pointer                                                                                  |
+| "Nepali traditions" was not marked while reading a Nepali topic                                    | redesign (current page) | Marked active on `/read/:id` for entries in that branch                                                             |
 
-1. **Quiz relevance.** Reading pages show the _branch_ quiz, so the Kumari page asks "Which deity is central to Pashupatinath?". Add per-entry questions or label it "Nepali Hinduism check". (frontend-design: every element does one job)
-2. **System theme default.** First visit is always Light. design-system-patterns recommends `prefers-color-scheme` as the default, with the saved choice taking precedence.
-3. **Mobile "On this page" strip** clips the second item mid-word ("Intera…"). Add `scroll-snap-type: x mandatory` and an edge fade so it reads as scrollable. (UUPM: no hidden affordances)
-4. **Search `autoFocus` on mobile** opens the keyboard on arrival. WDG: desktop only. Gate on `(pointer: fine)`.
-5. **Header active state** only matches exact routes. On `/read/kumari`, "Nepali traditions" is not marked. Highlight by the entry's branch.
-6. **Run the ui-ux-pro-max generator** (`python3 .claude/skills/ui-ux-pro-max/scripts/search.py "cultural heritage encyclopedia" --design-system -p "Sanatan Nepal"`) and persist the result as `design-system/MASTER.md` for future pages. Treat its palette output as advisory; DESIGN.md wins.
-7. **Run `web-design-guidelines` in CI review** on changed `.tsx` files; it is the most objective of the six and produces `file:line` findings.
+## Optional tooling
+
+1. **ui-ux-pro-max generator.** `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "cultural heritage encyclopedia" --design-system -p "Sanatan Nepal"` can persist a `design-system/MASTER.md` for future pages. Treat its palette as advisory; DESIGN.md wins.
+2. **web-design-guidelines in review.** Run it on changed `.tsx` files; it is the most objective of the six and reports `file:line` findings.
 
 ## Verification
 
-`npm run lint`, `npm run format:check`, `tsc -b`, `npm test` (7 unit tests) and `npm run build` pass. The Playwright suite passes 9/9, including axe scans of seven routes in Light, Dark and Diya. Screenshots of the knowledge tree in Dark confirm themed nodes, controls and attribution.
+`npm run lint`, `npm run format:check`, `tsc -b`, `npm test` (8 unit tests) and `npm run build` pass. The Playwright suite passes 10/10, including axe scans of seven routes in Light, Dark and Diya. Screenshots of the knowledge tree in Dark confirm themed nodes, controls and attribution; phone screenshots confirm the section strip starts at its label and follows the reader.
