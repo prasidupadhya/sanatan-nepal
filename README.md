@@ -54,7 +54,7 @@ React 18, strict TypeScript, Vite, React Router v6, Tailwind CSS, Framer Motion,
 - `src/styles/`: base design system and explorer/theme styles
 - `tests/`: behavioral, content-integrity and production-browser tests
 
-Heavy explorers are lazy-loaded. The homepage pairs search with an interactive Nepal topic diagram, using the original mandala SVG. Branch indexes support URL-based filtering, and reading pages include section links and position feedback. Fonts use Google Fonts with local serif/sans fallbacks. OpenStreetMap tiles require network access; temple details remain available when tiles fail. See [design direction](DESIGN.md) and [reference applications and review](docs/DESIGN_REVIEW.md).
+Heavy explorers are lazy-loaded. The homepage pairs search with an interactive Nepal topic diagram, using the original mandala SVG. Branch indexes support URL-based filtering, and reading pages include section links and position feedback. Fonts use Google Fonts with local serif/sans fallbacks. OpenStreetMap tiles require network access; temple details remain available when tiles fail. See [design direction](DESIGN.md), [reference applications and review](docs/DESIGN_REVIEW.md) and [UI skills analysis](docs/UI_SKILLS_ANALYSIS.md).
 
 ## Validation
 

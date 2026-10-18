@@ -109,7 +109,7 @@ export default function KnowledgeTree() {
             nodesDraggable={false}
           >
             <AutoFit revision={active + ':' + (selected ?? '')} />
-            <Background color="#b39477" gap={22} />
+            <Background color="var(--node-line)" gap={22} />
             <Controls showInteractive={false} />
           </ReactFlow>
         </div>

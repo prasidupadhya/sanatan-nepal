@@ -18,7 +18,7 @@ export default function SearchPage() {
         Search the encyclopedia
       </label>
       <div className="search-field">
-        <Search />
+        <Search aria-hidden="true" />
         <input
           id="search-input"
           autoFocus

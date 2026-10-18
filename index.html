@@ -3,12 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <meta name="theme-color" content="#421d27" />
+    <meta name="theme-color" content="#f6efdf" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script>
+      // Apply the saved theme before first paint so dark readers see no light flash.
+      try {
+        const theme = JSON.parse(localStorage.getItem('sanatan-nepal-theme'))
+          ?.state?.theme;
+        if (theme === 'dark' || theme === 'diya') {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = 'dark';
+        }
+      } catch {}
+    </script>
     <meta
       name="description"
       content="Explore the scriptures, stories, temples and living traditions of Hindu Nepal."
     />
-    <title>Sanatan Nepal — A living constellation</title>
+    <title>Sanatan Nepal — Hindu traditions in Nepal</title>
   </head>
   <body>
     <div id="root"></div>

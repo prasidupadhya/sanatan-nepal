@@ -7,6 +7,14 @@ import Home from './Home';
 import LoadingContent from '../components/ui/LoadingContent';
 import ContentBoundary from '../components/ui/ContentBoundary';
 import { Branch, Reading, NotFound } from './Reading';
+import { branches, entries } from '../content/catalog';
+const pageTitles: Record<string, string> = {
+  '/': 'Hindu traditions in Nepal',
+  '/explore': 'Knowledge tree',
+  '/temples': 'Sacred places',
+  '/search': 'Search',
+  '/saved': 'Saved chapters',
+};
 const SearchPage = lazy(() => import('./SearchPage'));
 const Saved = lazy(() => import('./Saved'));
 const TempleMap = lazy(() => import('../components/map/TempleMap'));
@@ -15,11 +23,12 @@ function ScrollReset() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
     if (!hash) window.scrollTo(0, 0);
-    document.title =
-      'Sanatan Nepal — ' +
-      (pathname === '/'
-        ? 'Hindu traditions in Nepal'
-        : pathname.split('/').pop()?.replaceAll('-', ' '));
+    const slug = pathname.split('/').pop();
+    const title =
+      pageTitles[pathname] ??
+      [...entries, ...branches].find((item) => item.id === slug)?.title ??
+      'Page not found';
+    document.title = title + ' — Sanatan Nepal';
   }, [pathname, hash]);
   return null;
 }
@@ -39,21 +48,21 @@ export default function App() {
         </Link>
         <nav aria-label="Main navigation">
           <NavLink to="/explore">
-            <GitBranch size={16} />
+            <GitBranch size={16} aria-hidden="true" />
             Explore
           </NavLink>
           <NavLink to="/branch/nepal">Nepali traditions</NavLink>
           <NavLink to="/temples">
-            <MapPin size={16} />
+            <MapPin size={16} aria-hidden="true" />
             Sacred places
           </NavLink>
         </nav>
         <div className="header-tools">
           <Link to="/search" aria-label="Search">
-            <Search size={19} />
+            <Search size={19} aria-hidden="true" />
           </Link>
           <Link to="/saved" aria-label="Saved chapters">
-            <Bookmark size={19} />
+            <Bookmark size={19} aria-hidden="true" />
           </Link>
           <ThemeControl />
         </div>

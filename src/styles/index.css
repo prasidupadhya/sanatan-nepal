@@ -14,6 +14,19 @@
   --accent: #9b402e;
   --gold: #e0b66c;
   --shell: #421d27;
+  /* Text and lines placed on the maroon shell, in every theme. */
+  --on-shell: #fff4df;
+  --on-shell-muted: #dfcfc6;
+  --on-shell-line: #986858;
+  /* Graph nodes and edges follow the active theme. */
+  --node-bg: #fff9ee;
+  --node-line: #b39477;
+  --edge: #ae8253;
+  --related-bg: #eed8af;
+  --success: #46734f;
+}
+html {
+  -webkit-tap-highlight-color: transparent;
 }
 * {
   box-sizing: border-box;
@@ -35,6 +48,12 @@ a,
 input,
 select {
   outline-offset: 5px;
+}
+button,
+a,
+summary,
+select {
+  touch-action: manipulation;
 }
 button {
   cursor: pointer;
@@ -123,6 +142,9 @@ nav a {
   gap: 8px;
   align-items: center;
 }
+nav a:hover {
+  color: var(--accent);
+}
 nav a.active {
   color: var(--accent);
   text-decoration: underline;
@@ -133,32 +155,6 @@ nav a.active {
 }
 .header-tools a {
   display: flex;
-}
-.hero {
-  position: relative;
-  background: var(--shell);
-  color: #f6efdf;
-  padding: 68px 7% 0;
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  overflow: hidden;
-}
-.hero-copy {
-  padding: 20px 0 48px;
-  z-index: 1;
-}
-.hero .devanagari {
-  color: var(--gold);
-}
-.hero h1 {
-  font-size: clamp(48px, 5.6vw, 85px);
-  line-height: 1.02;
-  letter-spacing: -1.5px;
-}
-.hero p {
-  color: #dccbbf;
-  max-width: 510px;
-  font-size: 15px;
 }
 .actions {
   display: flex;
@@ -179,6 +175,21 @@ nav a.active {
   font-weight: 600;
   border-radius: 4px;
 }
+.button {
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.12s ease;
+}
+.button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.button:active,
+.chips a:active,
+.chips button:active {
+  transform: scale(0.98);
+}
 .button.gold {
   background: var(--gold);
   color: #421d27;
@@ -190,141 +201,10 @@ nav a.active {
   gap: 10px;
   font-size: 13px;
 }
-.hero-art {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  color: #c9a266;
-}
 .mandala {
   width: 100%;
   max-width: 510px;
   opacity: 0.68;
-}
-.hero-art > span {
-  font-size: 12px;
-  margin: 10px 0 30px;
-  letter-spacing: 1px;
-}
-.hero-bottom {
-  grid-column: 1/-1;
-  border-top: 1px solid #745342;
-  display: flex;
-  justify-content: space-between;
-  padding: 22px 0;
-  font-size: 11px;
-  color: #d0b9a4;
-}
-.intro-row {
-  padding: 64px 6% 28px;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 30px;
-}
-.intro-row h2 {
-  max-width: 520px;
-  margin-bottom: 0;
-}
-.intro-row p {
-  font-size: 13px;
-  margin: 0;
-}
-.intro-row .devanagari {
-  font-size: 15px;
-}
-.branch-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 0 6% 64px;
-  gap: 14px;
-}
-.branch-card {
-  position: relative;
-  padding: 26px 22px 45px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  min-height: 305px;
-  transition:
-    transform 0.2s,
-    background 0.2s;
-}
-.branch-card:hover {
-  transform: translateY(-5px);
-  background: var(--surface);
-}
-.branch-symbol {
-  display: block;
-  font-size: 33px;
-  color: var(--accent);
-  margin-bottom: 25px;
-}
-.branch-card .devanagari {
-  font-size: 12px;
-  margin-bottom: 10px;
-  color: var(--muted);
-}
-.branch-card h3 {
-  font-size: 26px;
-}
-.branch-card p {
-  font-size: 12px;
-  line-height: 1.8;
-}
-.card-arrow {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-}
-.nepal-card {
-  background: #e7d8bc;
-  border-color: #baa078;
-}
-.nepal-feature {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7%;
-  align-items: center;
-  margin: 0 6% 64px;
-  padding: 40px;
-  background: #eaddc8;
-  border-radius: 5px;
-}
-.nepal-feature p {
-  max-width: 500px;
-  font-size: 14px;
-}
-.pagoda-art {
-  background: #5a3333;
-  border-radius: 50% 50% 4px 4px;
-  overflow: hidden;
-  max-width: 500px;
-}
-.pagoda-art svg {
-  width: 100%;
-  display: block;
-}
-.quick-paths {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin: 0 6% 64px;
-  gap: 35px;
-}
-.quick-paths a {
-  border-top: 1px solid var(--line);
-  padding-top: 24px;
-}
-.quick-paths svg {
-  color: var(--accent);
-  margin-bottom: 15px;
-}
-.quick-paths h3 {
-  margin-bottom: 8px;
-}
-.quick-paths p {
-  font-size: 13px;
 }
 footer {
   display: flex;
@@ -335,11 +215,11 @@ footer {
   align-items: center;
 }
 footer p {
-  font-size: 12px;
+  font-size: 13px;
   margin: 0;
 }
 footer > a:last-child {
-  font-size: 12px;
+  font-size: 13px;
 }
 .page {
   padding: 50px 6% 70px;
@@ -397,9 +277,9 @@ footer > a:last-child {
   margin-top: 30px;
 }
 .react-flow__node-default {
-  border: 1px solid #b39477 !important;
-  background: #fff9ee !important;
-  color: #421d27 !important;
+  border: 1px solid var(--node-line) !important;
+  background: var(--node-bg) !important;
+  color: var(--ink) !important;
   border-radius: 7px !important;
   padding: 18px !important;
   width: 180px !important;
@@ -409,11 +289,11 @@ footer > a:last-child {
 }
 .react-flow__node.active-node,
 .react-flow__node.root-node {
-  background: #421d27 !important;
-  color: #f6efdf !important;
+  background: var(--shell) !important;
+  color: var(--on-shell) !important;
 }
 .react-flow__edge-path {
-  stroke: #ae8253 !important;
+  stroke: var(--edge) !important;
 }
 .text-link {
   display: block;
@@ -455,7 +335,7 @@ footer > a:last-child {
   font-size: 14px;
 }
 .entry-card span {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--accent);
 }
 .reading {
@@ -492,7 +372,19 @@ footer > a:last-child {
   border: 1px solid var(--line);
   border-radius: 40px;
   padding: 10px 17px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   font-size: 13px;
+  color: var(--ink);
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.12s ease;
+}
+.chips a:hover,
+.chips button:hover {
+  border-color: var(--accent);
 }
 .skip-link {
   position: fixed;
@@ -508,20 +400,11 @@ footer > a:last-child {
   nav {
     gap: 15px;
   }
-  .branch-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .tree-layout {
     grid-template-columns: 1fr 250px;
   }
-  .hero {
-    padding-top: 35px;
-  }
   .actions {
     gap: 18px;
-  }
-  .hero h1 {
-    font-size: 62px;
   }
 }
 @media (max-width: 720px) {
@@ -543,84 +426,14 @@ footer > a:last-child {
     border-top: 1px solid var(--line);
   }
   nav a {
-    font-size: 11px;
+    font-size: 13px;
   }
   .header-tools {
     margin-left: auto;
     gap: 15px;
   }
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 40px 6% 0;
-  }
-  .hero h1 {
-    font-size: 57px;
-  }
-  .hero-art {
-    position: absolute;
-    width: 330px;
-    right: -150px;
-    top: 55px;
-    opacity: 0.2;
-  }
-  .hero-art > span {
-    display: none;
-  }
-  .hero-copy {
-    padding: 0 0 40px;
-  }
-  .hero-copy p {
-    padding-right: 30px;
-  }
-  .hero-bottom span:last-child {
-    display: none;
-  }
-  .intro-row {
-    display: block;
-    padding-top: 40px;
-  }
-  .intro-row p {
-    margin-top: 20px;
-  }
   h2 {
     font-size: 35px;
-  }
-  .branch-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding-bottom: 40px;
-  }
-  .branch-card {
-    padding: 22px 18px 38px;
-    min-height: 290px;
-  }
-  .branch-card:last-child {
-    grid-column: 1/-1;
-    min-height: 200px;
-  }
-  .nepal-feature {
-    grid-template-columns: 1fr;
-    padding: 24px;
-    margin-bottom: 40px;
-    gap: 28px;
-  }
-  .pagoda-art {
-    max-height: 260px;
-  }
-  .quick-paths {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-bottom: 40px;
-  }
-  .quick-paths a {
-    display: grid;
-    grid-template-columns: 35px 1fr;
-  }
-  .quick-paths p {
-    grid-column: 2;
-  }
-  .quick-paths h3 {
-    font-size: 27px;
   }
   footer {
     flex-wrap: wrap;
